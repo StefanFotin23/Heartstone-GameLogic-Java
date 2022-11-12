@@ -1,0 +1,30 @@
+[ {
+  "command" : "getPlayerTurn",
+  "output" : 1
+}, {
+  "command" : "getPlayerTurn",
+  "output" : 1
+}, {
+  "command" : "getPlayerTurn",
+  "output" : 2
+}, {
+  "command" : "getPlayerDeck",
+  "playerIdx" : 2,
+  "output" : [ {
+    "mana" : 1,
+    "description" : "Standard card: The dragon was unleashed, run for your lives.",
+    "colors" : [ "Blue", "Green", "White" ],
+    "name" : "Firestorm"
+  } ]
+}, {
+  "command" : "getPlayerDeck",
+  "playerIdx" : 1,
+  "output" : [ {
+    "mana" : 2,
+    "description" : "Standard card: A drink can always be served, with the blood of his enemies.",
+    "colors" : [ "Red", "Blue", "Pink" ],
+    "name" : "Berserker",
+    "attackDamage" : 3,
+    "health" : 1
+  } ]
+} ]
