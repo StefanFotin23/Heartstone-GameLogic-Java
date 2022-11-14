@@ -6,24 +6,24 @@ import java.util.ArrayList;
 import static Constants.Constants.*;
 
 public class GameTable {
-    private final Player player1;
-    private final Player player2;
+    private final Player firstPlayer;
+    private final Player secondPlayer;
     private ArrayList<Card> playerOneFrontRow = new ArrayList<>();
     private ArrayList<Card> playerOneBackRow = new ArrayList<>();
     private ArrayList<Card> playerTwoFrontRow = new ArrayList<>();
     private ArrayList<Card> playerTwoBackRow = new ArrayList<>();
 
-    public GameTable(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
+    public GameTable(Player firstPlayer, Player secondPlayer) {
+        this.firstPlayer = firstPlayer;
+        this.secondPlayer = secondPlayer;
     }
 
-    public Player getPlayer1() {
-        return player1;
+    public Player getFirstPlayer() {
+        return firstPlayer;
     }
 
-    public Player getPlayer2() {
-        return player2;
+    public Player getSecondPlayer() {
+        return secondPlayer;
     }
 
     public Card getPlayerCard(Player player, Coordinates coordinates) {
@@ -136,6 +136,47 @@ public class GameTable {
         return cards;
     }
 
+    public ArrayList<Card> getRow(int row) {
+        if (row == PLAYER_ONE_BACK_ROW_INDEX) {
+            return playerOneBackRow;
+        }
+        if (row == PLAYER_ONE_FRONT_ROW_INDEX) {
+            return playerOneFrontRow;
+        }
+        if (row == PLAYER_TWO_BACK_ROW_INDEX) {
+            return playerTwoBackRow;
+        }
+        if (row == PLAYER_TWO_FRONT_ROW_INDEX) {
+            return playerTwoFrontRow;
+        }
+        return null;
+    }
+
+    public ArrayList<Card> getMirroredRow(int row) {
+        if (row == PLAYER_ONE_BACK_ROW_INDEX) {
+            return playerTwoBackRow;
+        }
+        if (row == PLAYER_ONE_FRONT_ROW_INDEX) {
+            return playerTwoFrontRow;
+        }
+        if (row == PLAYER_TWO_BACK_ROW_INDEX) {
+            return playerOneBackRow;
+        }
+        if (row == PLAYER_TWO_FRONT_ROW_INDEX) {
+            return playerOneFrontRow;
+        }
+        return null;
+    }
+
+    public ArrayList<ArrayList<Card>> getCardsFromTable() {
+        ArrayList<ArrayList<Card>> cards = new ArrayList<>();
+        cards.add(playerOneBackRow);
+        cards.add(playerOneFrontRow);
+        cards.add(playerTwoFrontRow);
+        cards.add(playerTwoBackRow);
+        return cards;
+    }
+
     public ArrayList<Card> getFrozenCards() {
         ArrayList<Card> cards = new ArrayList<>();
         for (int i = 0; i < playerOneBackRow.size(); i++) {
@@ -148,14 +189,14 @@ public class GameTable {
                 cards.add(playerOneFrontRow.get(i));
             }
         }
-        for (int i = 0; i < playerTwoBackRow.size(); i++) {
-            if(playerTwoBackRow.get(i).isFrozen()) {
-                cards.add(playerTwoBackRow.get(i));
-            }
-        }
         for (int i = 0; i < playerTwoFrontRow.size(); i++) {
             if(playerTwoFrontRow.get(i).isFrozen()) {
                 cards.add(playerTwoFrontRow.get(i));
+            }
+        }
+        for (int i = 0; i < playerTwoBackRow.size(); i++) {
+            if(playerTwoBackRow.get(i).isFrozen()) {
+                cards.add(playerTwoBackRow.get(i));
             }
         }
         return cards;
@@ -195,19 +236,19 @@ public class GameTable {
 
     public Player getPlayer(int index) {
         if (index == 1) {
-            if (player1.getName().equals(PLAYER1)) {
-                return player1;
+            if (firstPlayer.getName().equals(PLAYER1)) {
+                return firstPlayer;
             } else {
-                return player2;
+                return secondPlayer;
             }
         } else if (index == 2) {
-            if (player2.getName().equals(PLAYER2)) {
-                return player2;
+            if (secondPlayer.getName().equals(PLAYER2)) {
+                return secondPlayer;
             } else {
-                return player1;
+                return firstPlayer;
             }
         } else {
-            System.out.println("Player index error");
+            System.out.println("getPlayer index = " + index + " error");
             return null;
         }
     }

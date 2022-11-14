@@ -97,4 +97,21 @@ public abstract class Card {
     public ArrayList<String> getColor() {
         return colors;
     }
+
+    public boolean onFrontRow() {
+        if (this.getName().equals("The Ripper") ||
+        this.getName().equals("Miraj") ||
+        this.getName().equals("Goliath") ||
+        this.getName().equals("Warden")) {
+            return true;
+        } else if (this.getName().equals("Sentinel") ||
+                this.getName().equals("Berserker") ||
+                this.getName().equals("The Cursed One") ||
+                this.getName().equals("Disciple")) {
+            return false;
+        } else {
+            System.out.println("onFrontRow error --> card name = " + this.getName());
+            return false;
+        }
+    }
 }

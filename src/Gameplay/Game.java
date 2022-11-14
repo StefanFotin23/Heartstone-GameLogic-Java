@@ -84,7 +84,7 @@ public class Game {
         Player player2 = new Player("player2", playerTwoDecks.getDecks().get(playerTwoDeckIdx), playerTwoHero, shuffleSeed);
 
         if (startingPlayer == 1) {
-            arrayNode =  playGame(player1, player2, actions);
+            arrayNode = playGame(player1, player2, actions);
         } else if(startingPlayer == 2) {
             arrayNode = playGame(player2, player1, actions);
         } else {
@@ -96,12 +96,17 @@ public class Game {
     public void initNewRound(Player firstPlayer, Player secondPlayer, int roundNr) {
         firstPlayer.getCardsInHand().add(firstPlayer.getDeck().pop());
         secondPlayer.getCardsInHand().add(secondPlayer.getDeck().pop());
+        //adding mana
         int manaBonus = roundNr;
         if (manaBonus > 10) {
             manaBonus = 10;
         }
         firstPlayer.addMana(manaBonus);
         secondPlayer.addMana(manaBonus);
+        //unfreezing the cards on table
+        for (int i = 0; i< gameTable.getCardsOnTable().size(); i++) {
+            gameTable.getCardsOnTable().get(i).setFrozen(false);
+        }
     }
 
     public ArrayNode playGame(Player firstPlayer, Player secondPlayer, ArrayList<Actions> actions) throws JsonProcessingException {
@@ -116,20 +121,43 @@ public class Game {
         for (int i = 0; i < actions.size(); i++) {
             //here we check if we start a new round
             if (playerOneTurnBeenPlayed && playerTwoTurnBeenPlayed) {
-                this.initNewRound(firstPlayer, secondPlayer, turnCounter / 2 + 1);
                 roundCounter++;
+                this.initNewRound(firstPlayer, secondPlayer, roundCounter);
                 playerOneTurnBeenPlayed = false;
                 playerTwoTurnBeenPlayed = false;
             }
 
             //here we check if the action is a statistic that will be done by the game (not players)
             if (actions.get(i).getCommand().equals("getCardsOnTable")) {
-                ArrayList<Card> cardsOnTable = this.gameTable.getCardsOnTable();
-                // CardsOnTableJson cardsOnTableJson = null;
-                //JsonNode jsonNode = JsonParse.parseObjectToJson(cardsOnTableJson);
-                //output.add(jsonNode);
+                ArrayList<ArrayList<Card>> cardsOnTable = this.gameTable.getCardsFromTable();
+                ArrayList<ArrayList<EnvironmentCardJsonOutput>> cardsOnTableOutput = new ArrayList<>();
+                for (int h = 0; h < cardsOnTable.size(); h++) {
+                    ArrayList<EnvironmentCardJsonOutput> cards = new ArrayList<>();
+                    for (int l = 0; l < cardsOnTable.get(h).size(); l++) {
+                        if (cardsOnTable.get(h).get(l).getType().equals(ENVIRONMENT)) {
+                            cards.add(new EnvironmentCardJsonOutput(cardsOnTable.get(h).get(l)));
+                        } else {
+                            cards.add(new CardJsonOutput(cardsOnTable.get(h).get(l)));
+                        }
+                    }
+                    cardsOnTableOutput.add(cards);
+                }
+                CardsOnTableJsonOutput playerDeckJson = new CardsOnTableJsonOutput(actions.get(i).getCommand(), cardsOnTableOutput);
+                JsonNode jsonNode = JsonParse.parseObjectToJson(playerDeckJson);
+                output.add(jsonNode);
             } else if (actions.get(i).getCommand().equals("getFrozenCardsOnTable")) {
                ArrayList<Card> frozenCardsOnTable = this.gameTable.getFrozenCards();
+                ArrayList<EnvironmentCardJsonOutput> frozenCardsOnTableOutput = new ArrayList<>();
+                for (int h = 0; h < frozenCardsOnTable.size(); h++) {
+                    if (frozenCardsOnTable.get(h).getType().equals(ENVIRONMENT)) {
+                        frozenCardsOnTableOutput.add(new EnvironmentCardJsonOutput(frozenCardsOnTable.get(h)));
+                    } else {
+                        frozenCardsOnTableOutput.add(new CardJsonOutput(frozenCardsOnTable.get(h)));
+                    }
+                }
+                GetFrozenCardsOutput playerDeckJson = new GetFrozenCardsOutput(actions.get(i).getCommand(), frozenCardsOnTableOutput);
+                JsonNode jsonNode = JsonParse.parseObjectToJson(playerDeckJson);
+                output.add(jsonNode);
             } else if (actions.get(i).getCommand().equals("getPlayerOneWins")) {
                 int playerOneWins = Statistics.getInstance().getPlayerOneWins();
                 GetNumberForCommandJsonOutput getPlayerOneWins = new GetNumberForCommandJsonOutput(actions.get(i).getCommand(), playerOneWins);
@@ -159,7 +187,7 @@ public class Game {
                         deckOutput.add(new CardJsonOutput(playerDeck.get(h)));
                     }
                 }
-                GetPlayerDeckJsonOutput playerDeckJson = new GetPlayerDeckJsonOutput(actions.get(i).getPlayerIdx(), deckOutput);
+                GetArrayOfCardsJsonOutput playerDeckJson = new GetArrayOfCardsJsonOutput(actions.get(i).getCommand(), actions.get(i).getPlayerIdx(), deckOutput);
                 JsonNode jsonNode = JsonParse.parseObjectToJson(playerDeckJson);
                 output.add(jsonNode);
             } else if (actions.get(i).getCommand().equals("getPlayerHero")) {
@@ -172,36 +200,70 @@ public class Game {
                 JsonNode jsonNode = JsonParse.parseObjectToJson(getPlayerHeroJsonOutput);
                 output.add(jsonNode);
             } else if (actions.get(i).getCommand().equals("getCardsInHand")) {
-                ArrayList<Card> cardsInHand;
-                if (actions.get(i).getPlayerIdx() == 1) {
-                    cardsInHand = this.gameTable.getPlayer1().getCardsInHand();
-                } else if (actions.get(i).getPlayerIdx() == 2) {
-                    cardsInHand = this.gameTable.getPlayer2().getCardsInHand();
-                } else {
-                    System.out.println("getCardsInHand error");
+                ArrayList<Card> cardsInHand = this.gameTable.getPlayer(actions.get(i).getPlayerIdx()).getCardsInHand();
+                if (cardsInHand == null) {
+                    System.out.println("getCardsInHand error, player index is " + actions.get(i).getPlayerIdx());
                 }
+                ArrayList<EnvironmentCardJsonOutput> cardsOutput = new ArrayList<>();
+                for (int h = 0; h < cardsInHand.size(); h++) {
+                    if (cardsInHand.get(h) == null) {
+                        System.out.println("getCardsInHand nullPointerException maybe");
+                    }
+                    if (cardsInHand.get(h) != null && cardsInHand.get(h).getType().equals(ENVIRONMENT)) {
+                        cardsOutput.add(new EnvironmentCardJsonOutput(cardsInHand.get(h)));
+                    } else {
+                        if (cardsInHand.get(h) != null) {
+                            cardsOutput.add(new CardJsonOutput(cardsInHand.get(h)));
+                        }
+                    }
+                }
+                GetArrayOfCardsJsonOutput cardsInHandJsonOutput = new GetArrayOfCardsJsonOutput(actions.get(i).getCommand(), actions.get(i).getPlayerIdx(), cardsOutput);
+                JsonNode jsonNode = JsonParse.parseObjectToJson(cardsInHandJsonOutput);
+                output.add(jsonNode);
             } else if (actions.get(i).getCommand().equals("getPlayerMana")) {
-                int playerMana;
-                if (actions.get(i).getPlayerIdx() == 1) {
-                    playerMana = this.gameTable.getPlayer1().getMana();
-                } else if (actions.get(i).getPlayerIdx() == 2) {
-                    playerMana = this.gameTable.getPlayer2().getMana();
-                } else {
-                    System.out.println("getPlayerMana error");
-                }
+                int playerMana = this.gameTable.getPlayer(actions.get(i).getPlayerIdx()).getMana();
+                GetManaJsonOutput getPlayerMana = new GetManaJsonOutput(actions.get(i).getCommand(), actions.get(i).getPlayerIdx(), playerMana);
+                JsonNode jsonNode = JsonParse.parseObjectToJson(getPlayerMana);
+                output.add(jsonNode);
             } else if (actions.get(i).getCommand().equals("getEnvironmentCardsInHand")) {
-                ArrayList<Card> environmentCardsInHand;
-                if (actions.get(i).getPlayerIdx() == 1) {
-                    environmentCardsInHand = this.gameTable.getPlayer1().getEnvironmentalCardsInHand();
-                } else if (actions.get(i).getPlayerIdx() == 2) {
-                    environmentCardsInHand = this.gameTable.getPlayer2().getEnvironmentalCardsInHand();
-                } else {
+                ArrayList<Card> environmentCardsInHand = this.gameTable.getPlayer(actions.get(i).getPlayerIdx()).getEnvironmentalCardsInHand();
+                if (environmentCardsInHand == null) {
                     System.out.println("getEnvironmentCardsInHand error");
                 }
+                ArrayList<EnvironmentCardJsonOutput> cardsOutput = new ArrayList<>();
+                for (int h = 0; h < environmentCardsInHand.size(); h++) {
+                    if (environmentCardsInHand.get(h) == null) {
+                        System.out.println("getEnvironmentalCardsInHand nullPointerException maybe");
+                    }
+                    if (environmentCardsInHand.get(h) != null) {
+                        cardsOutput.add(new EnvironmentCardJsonOutput(environmentCardsInHand.get(h)));
+                    }
+                }
+                GetArrayOfCardsJsonOutput cardsInHandJsonOutput = new GetArrayOfCardsJsonOutput(actions.get(i).getCommand(), actions.get(i).getPlayerIdx(), cardsOutput);
+                JsonNode jsonNode = JsonParse.parseObjectToJson(cardsInHandJsonOutput);
+                output.add(jsonNode);
             } else if (actions.get(i).getCommand().equals("getCardAtPosition")) {
                 Card card = this.gameTable.getCardFromTable(actions.get(i).getX(), actions.get(i).getY());
                 if (card == null) {
+                    //if there is no card
                     String errorString = NO_CARD_THERE;
+                    GetCardErrorStringOutput errorStringJsonOutput = new GetCardErrorStringOutput(
+                            actions.get(i).getCommand(), actions.get(i).getX(), actions.get(i).getY(), errorString);
+                    JsonNode jsonNode = JsonParse.parseObjectToJson(errorStringJsonOutput);
+                    output.add(jsonNode);
+                } else {
+                    //if there is a card
+                    if (card.getType().equals(ENVIRONMENT)) {
+                        GetEnvironmentCardJsonOutput jsonOutput = new GetEnvironmentCardJsonOutput(actions.get(i).getCommand(),
+                                actions.get(i).getX(), actions.get(i).getY(), card);
+                        JsonNode jsonNode = JsonParse.parseObjectToJson(jsonOutput);
+                        output.add(jsonNode);
+                    } else {
+                        GetCardJsonOutput jsonOutput = new GetCardJsonOutput(actions.get(i).getCommand(),
+                                actions.get(i).getX(), actions.get(i).getY(), card);
+                        JsonNode jsonNode = JsonParse.parseObjectToJson(jsonOutput);
+                        output.add(jsonNode);
+                    }
                 }
             } else {
                 //if command is "endPlayerTurn", the "player turn" flag becomes true
@@ -217,7 +279,7 @@ public class Game {
                         JsonNode jsonNode = JsonParse.parseObjectToJson(getPlayerTurnJsonOutput);
                         output.add(jsonNode);
                     } else {
-                        playerOneTurnBeenPlayed = firstPlayer.executeAction(actions.get(i), gameTable);
+                        playerOneTurnBeenPlayed = firstPlayer.executeAction(actions.get(i), gameTable, output);
                         if (playerOneTurnBeenPlayed) {
                             turnCounter++;
                         }
@@ -234,7 +296,7 @@ public class Game {
                         JsonNode jsonNode = JsonParse.parseObjectToJson(getPlayerTurnJsonOutput);
                         output.add(jsonNode);
                     } else {
-                        playerTwoTurnBeenPlayed = secondPlayer.executeAction(actions.get(i), gameTable);
+                        playerTwoTurnBeenPlayed = secondPlayer.executeAction(actions.get(i), gameTable, output);
                         if (playerTwoTurnBeenPlayed) {
                             turnCounter++;
                         }

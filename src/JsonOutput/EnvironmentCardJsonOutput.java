@@ -1,8 +1,8 @@
 package JsonOutput;
 
 import Cards.*;
-
 import java.util.ArrayList;
+import static Constants.Constants.*;
 
 public class EnvironmentCardJsonOutput {
     private final int mana;

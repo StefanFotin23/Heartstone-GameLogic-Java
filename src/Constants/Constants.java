@@ -22,4 +22,8 @@ public class Constants {
     public static String PLAYER1 = "player1";
     public static String PLAYER2 = "player2";
     public static int HERO_HEALTH_DEFAULT_VALUE = 30;
+    public static String NOT_ENVIRONMENT_MESSAGE = "Chosen card is not of type environment.";
+    public static String NOT_MANA_ENVIRONMENT_MESSAGE = "Not enough mana to use environment card.";
+    public static String CHOSEN_ROW_NOT_ENEMY = "Chosen row does not belong to the enemy.";
+    public static String CANT_STEAL_ENEMY_CARD = "Cannot steal enemy card since the player's row is full.";
 }
