@@ -208,7 +208,7 @@ public class Game {
                 ArrayList<EnvironmentCardJsonOutput> cardsOutput = new ArrayList<>();
                 for (int h = 0; h < cardsInHand.size(); h++) {
                     if (cardsInHand.get(h) == null) {
-                        System.out.println("getCardsInHand nullPointerException maybe");
+                        System.out.println("getCardsInHand " + h + " elem of CardsInHandList = null in GET CARDS IN HAND");
                     }
                     if (cardsInHand.get(h) != null && cardsInHand.get(h).getType().equals(ENVIRONMENT)) {
                         cardsOutput.add(new EnvironmentCardJsonOutput(cardsInHand.get(h)));

@@ -26,49 +26,42 @@ public class GameTable {
         return secondPlayer;
     }
 
-    public Card getPlayerCard(Player player, Coordinates coordinates) {
-        if (player.getName().equals("player1")) {
-            if (coordinates.getX() == PLAYER_ONE_BACK_ROW_INDEX &&
-                    coordinates.getY() < playerOneBackRow.size()) {
-                return playerOneBackRow.get(coordinates.getY());
-            }
-            if (coordinates.getX() == PLAYER_ONE_FRONT_ROW_INDEX &&
-                    coordinates.getY() < playerOneFrontRow.size()) {
-                return playerOneFrontRow.get(coordinates.getY());
-            }
-        } else if (player.getName().equals("player2")) {
-            if (coordinates.getX() == PLAYER_TWO_BACK_ROW_INDEX &&
-                    coordinates.getY() < playerTwoBackRow.size()) {
-                return playerTwoBackRow.get(coordinates.getY());
-            }
-            if (coordinates.getX() == PLAYER_TWO_FRONT_ROW_INDEX &&
-                    coordinates.getY() < playerTwoFrontRow.size()) {
-                return playerTwoFrontRow.get(coordinates.getY());
-            }
+    public int getPlayerNumber(Player player) {
+        if (player.getName().equals(firstPlayer.getName())) {
+            return 1;
+        } else if (player.getName().equals(secondPlayer.getName())) {
+            return 2;
         }
-        return null;
+        System.out.println("getPlayerNumber error at player index");
+        return -1;
     }
 
-    public Card getPlayerCard(Player player, int x, int y) {
-        if (player.getName().equals("player1")) {
-            if (x == PLAYER_ONE_BACK_ROW_INDEX &&
-                    y < playerOneBackRow.size()) {
-                return playerOneBackRow.get(y);
+    public Card getPlayerCard(Coordinates coordinates) {
+        if (coordinates.getX() == PLAYER_ONE_BACK_ROW_INDEX) {
+            if (coordinates.getY() > playerOneBackRow.size() - 1) {
+                System.out.println("GET PLAYER CARD Y out of bounds in PlayerOneBackRow");
             }
-            if (x == PLAYER_ONE_FRONT_ROW_INDEX &&
-                    y < playerOneFrontRow.size()) {
-                return playerOneFrontRow.get(y);
-            }
-        } else if (player.getName().equals("player2")) {
-            if (x == PLAYER_TWO_BACK_ROW_INDEX &&
-                    y < playerTwoBackRow.size()) {
-                return playerTwoBackRow.get(y);
-            }
-            if (x == PLAYER_TWO_FRONT_ROW_INDEX &&
-                    y < playerTwoFrontRow.size()) {
-                return playerTwoFrontRow.get(y);
-            }
+            return playerOneBackRow.get(coordinates.getY());
         }
+        if (coordinates.getX() == PLAYER_ONE_FRONT_ROW_INDEX) {
+            if (coordinates.getY() > playerOneFrontRow.size() - 1) {
+                System.out.println("GET PLAYER CARD Y out of bounds in PlayerOneFrontRow");
+            }
+            return playerOneFrontRow.get(coordinates.getY());
+        }
+        if (coordinates.getX() == PLAYER_TWO_BACK_ROW_INDEX) {
+            if (coordinates.getY() > playerTwoBackRow.size() - 1) {
+                System.out.println("GET PLAYER CARD Y out of bounds in PlayerTwoBackRow");
+            }
+            return playerTwoBackRow.get(coordinates.getY());
+        }
+        if (coordinates.getX() == PLAYER_TWO_FRONT_ROW_INDEX) {
+            if (coordinates.getY() > playerTwoFrontRow.size() - 1) {
+                System.out.println("GET PLAYER CARD Y out of bounds in PlayerTwoFrontRow");
+            }
+            return playerTwoFrontRow.get(coordinates.getY());
+        }
+        System.out.println("Couldn't find card at " + coordinates + " for player " + this);
         return null;
     }
 
@@ -200,22 +193,6 @@ public class GameTable {
             }
         }
         return cards;
-    }
-
-    public Card getCardFromTable(Coordinates coordinates) {
-        if (coordinates.getX() == PLAYER_ONE_BACK_ROW_INDEX) {
-            return  playerOneBackRow.get(coordinates.getY());
-        }
-        if (coordinates.getX() == PLAYER_ONE_FRONT_ROW_INDEX) {
-            return  playerOneFrontRow.get(coordinates.getY());
-        }
-        if (coordinates.getX() == PLAYER_TWO_BACK_ROW_INDEX) {
-            return  playerTwoBackRow.get(coordinates.getY());
-        }
-        if (coordinates.getX() == PLAYER_TWO_FRONT_ROW_INDEX) {
-            return  playerTwoFrontRow.get(coordinates.getY());
-        }
-        return null;
     }
 
     public Card getCardFromTable(int x, int y) {

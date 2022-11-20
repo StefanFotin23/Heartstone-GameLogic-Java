@@ -92,32 +92,36 @@ public class Player {
     }
 
     public void putCardOnTable(Card card, GameTable gameTable) {
-        if (this.name.equals(gameTable.getFirstPlayer().getName())) {
+        int playerNo = gameTable.getPlayerNumber(this);
+        if (playerNo == 1) {
             if (card.onFrontRow()) {
                 gameTable.getPlayerOneFrontRow().add(card);
             } else {
                 gameTable.getPlayerOneBackRow().add(card);
             }
-        } else if (this.name.equals(gameTable.getSecondPlayer().getName())) {
+        } else if (playerNo == 2) {
             if (card.onFrontRow()) {
                 gameTable.getPlayerTwoFrontRow().add(card);
             } else {
                 gameTable.getPlayerTwoBackRow().add(card);
             }
+        } else {
+            System.out.println("putCardOnTable playerNo error");
+            return;
         }
         this.setMana(this.getMana() - card.getMana());
     }
 
     //returns true if there is space on the table row
     public boolean hasSpaceOnTableRow(GameTable gameTable, Card card) {
-        if (this.name.equals(gameTable.getFirstPlayer().getName())) {
+        if (gameTable.getPlayerNumber(this) == 1) {
             if (card.onFrontRow() && gameTable.getPlayerOneFrontRow().size() < NUMBER_OF_CARDS_PER_ROW) {
                 return true;
             }
             if (!card.onFrontRow() && gameTable.getPlayerOneBackRow().size() < NUMBER_OF_CARDS_PER_ROW) {
                 return true;
             }
-        } else if (this.name.equals(gameTable.getSecondPlayer().getName())) {
+        } else if (gameTable.getPlayerNumber(this) == 2) {
             if (card.onFrontRow() && gameTable.getPlayerTwoFrontRow().size() < NUMBER_OF_CARDS_PER_ROW) {
                 return true;
             }
@@ -129,7 +133,7 @@ public class Player {
     }
 
     public boolean hasTankOnTable(GameTable gameTable) {
-        if (this.name.equals("player1")) {
+        if (gameTable.getPlayerNumber(this) == 1) {
             for (int i = 0; i < gameTable.getPlayerOneBackRow().size(); i++) {
                 if (gameTable.getPlayerOneBackRow().get(i).isTank()) {
                     return true;
@@ -140,7 +144,7 @@ public class Player {
                     return true;
                 }
             }
-        } else if (this.name.equals("player2")) {
+        } else if (gameTable.getPlayerNumber(this) == 2) {
             for (int i = 0; i < gameTable.getPlayerTwoBackRow().size(); i++) {
                 if (gameTable.getPlayerTwoBackRow().get(i).isTank()) {
                     return true;
@@ -157,17 +161,18 @@ public class Player {
 
     public void cardAttack(GameTable gameTable, Actions action, ArrayNode output) throws JsonProcessingException {
         Player enemyPlayer = null;
-        if (this.getName().equals("player1")) {
+        int playerNo = gameTable.getPlayerNumber(this);
+        if (playerNo == 1) {
             enemyPlayer = gameTable.getSecondPlayer();
-        } else if (this.getName().equals("player2")) {
+        } else if (playerNo == 2) {
             enemyPlayer = gameTable.getFirstPlayer();
         }
-        Card attackerCard = gameTable.getPlayerCard(this, action.getCardAttacker());
-        Card attackedCard = gameTable.getPlayerCard(enemyPlayer, action.getCardAttacked());
+
+        Card attackerCard = gameTable.getPlayerCard(action.getCardAttacker());
+        Card attackedCard = gameTable.getPlayerCard(action.getCardAttacked());
 
         if (attackerCard == null) {
-            System.out.println("Attacker card = null at " + action);
-            return;
+            System.out.println("Attacker card = null at CARD ATTACK at " + action);
         }
 
         boolean flag = true;
@@ -178,55 +183,50 @@ public class Player {
                     action.getCardAttacker(), action.getCardAttacked(), ATTACKED_CARD_NONEXISTENT);
             JsonNode jsonNode = JsonParse.parseObjectToJson(errorStr);
             output.add(jsonNode);
-        } else if (attackerCard.isUsedThisTurn()) {
-            flag = false;
-            CardAttackerErrorMessage errorStr = new CardAttackerErrorMessage("cardUsesAttack",
-                    action.getCardAttacker(), action.getCardAttacked(), ATTACKER_CARD_USED);
-            JsonNode jsonNode = JsonParse.parseObjectToJson(errorStr);
-            output.add(jsonNode);
-        } else if (attackerCard.isFrozen()) {
-            flag = false;
-            CardAttackerErrorMessage errorStr = new CardAttackerErrorMessage("cardUsesAttack",
-                    action.getCardAttacker(), action.getCardAttacked(), ATTACKER_CARD_FROZEN);
-            JsonNode jsonNode = JsonParse.parseObjectToJson(errorStr);
-            output.add(jsonNode);
-        } else if ((!attackedCard.isTank()) && enemyPlayer.hasTankOnTable(gameTable)) {
-            //if the attackedCard exists, but is not Tank and player has a Tank on table
-            flag = false;
-            CardAttackerErrorMessage errorStr = new CardAttackerErrorMessage("cardUsesAttack",
-                    action.getCardAttacker(), action.getCardAttacked(), ATTACKED_CARD_NOT_TANK);
-            JsonNode jsonNode = JsonParse.parseObjectToJson(errorStr);
-            output.add(jsonNode);
-        } else if (flag) {
-            //we attack that card
-            attackedCard.setHealth(attackedCard.getHealth() - attackerCard.getAttackDamage());
-            if (attackedCard.getHealth() <= 0) {
-                gameTable.removeCard(action.getCardAttacked());
+        } else {
+            if (attackerCard.isUsedThisTurn()) {
+                flag = false;
+                CardAttackerErrorMessage errorStr = new CardAttackerErrorMessage("cardUsesAttack",
+                        action.getCardAttacker(), action.getCardAttacked(), ATTACKER_CARD_USED);
+                JsonNode jsonNode = JsonParse.parseObjectToJson(errorStr);
+                output.add(jsonNode);
+            } else if (attackerCard.isFrozen()) {
+                flag = false;
+                CardAttackerErrorMessage errorStr = new CardAttackerErrorMessage("cardUsesAttack",
+                        action.getCardAttacker(), action.getCardAttacked(), ATTACKER_CARD_FROZEN);
+                JsonNode jsonNode = JsonParse.parseObjectToJson(errorStr);
+                output.add(jsonNode);
+            } else if ((!attackedCard.isTank()) && enemyPlayer.hasTankOnTable(gameTable)) {
+                //if the attackedCard exists, but is not Tank and player has a Tank on table
+                flag = false;
+                CardAttackerErrorMessage errorStr = new CardAttackerErrorMessage("cardUsesAttack",
+                        action.getCardAttacker(), action.getCardAttacked(), ATTACKED_CARD_NOT_TANK);
+                JsonNode jsonNode = JsonParse.parseObjectToJson(errorStr);
+                output.add(jsonNode);
+            } else if (flag) {
+                //we attack that card
+                attackedCard.setHealth(attackedCard.getHealth() - attackerCard.getAttackDamage());
+                if (attackedCard.getHealth() <= 0) {
+                    gameTable.removeCard(action.getCardAttacked());
+                }
+                attackerCard.setUsedThisTurn(true);
             }
-            attackerCard.setUsedThisTurn(true);
         }
     }
 
     public void cardAbilityAttack(GameTable gameTable, Actions action, ArrayNode output) throws JsonProcessingException {
-        Card attackedCard;
+        Card attackedCard = attackedCard = gameTable.getPlayerCard(action.getCardAttacked());
+        Card attackerCard = gameTable.getPlayerCard(action.getCardAttacker());
         Player enemyPlayer = null;
-        if (this.getName().equals("player1")) {
+        int playerNo = gameTable.getPlayerNumber(this);
+        if (playerNo == 1) {
             enemyPlayer = gameTable.getSecondPlayer();
-        } else if (this.getName().equals("player2")) {
+        } else if (playerNo == 2) {
             enemyPlayer = gameTable.getFirstPlayer();
         }
 
-        Card attackerCard = gameTable.getPlayerCard(this, action.getCardAttacker());
-
         if (attackerCard == null) {
-            System.out.println("Attacker card = null (cardAbilityAttack) at " + action);
-            return;
-        }
-
-        if (attackerCard.isDisciple()) {
-            attackedCard = gameTable.getPlayerCard(this, action.getCardAttacked());
-        } else {
-            attackedCard = gameTable.getPlayerCard(enemyPlayer, action.getCardAttacked());
+            System.out.println("Attacker card = null at CARD ABILITY ATTACK at " + action);
         }
 
         boolean flag = true;
@@ -291,21 +291,20 @@ public class Player {
 
     public void useAttackHero(GameTable gameTable, Actions action, ArrayNode output) throws JsonProcessingException {
         Player enemyPlayer = null;
-        if (this.getName().equals("player1")) {
+        int playerNo = gameTable.getPlayerNumber(this);
+        if (playerNo == 1) {
             enemyPlayer = gameTable.getSecondPlayer();
-        } else if (this.getName().equals("player2")) {
+        } else if (playerNo == 2) {
             enemyPlayer = gameTable.getFirstPlayer();
         }
-        Card attackerCard = gameTable.getPlayerCard(this, action.getCardAttacker());
+        Card attackerCard = gameTable.getPlayerCard(action.getCardAttacker());
 
         if (attackerCard == null) {
-            System.out.println("Attacker card null at useAttackHero at " + action);
-            return;
+            System.out.println("Attacker card = null at USE ATTACK HERO at " + action);
         }
 
         if (enemyPlayer == null) {
             System.out.println("Enemy player null at useAttackHero at " + action);
-            return;
         }
 
         boolean flag = true;
@@ -337,6 +336,12 @@ public class Player {
                 GameEndedOutput gameEndedOutput = new GameEndedOutput(this);
                 JsonNode jsonNode = JsonParse.parseObjectToJson(gameEndedOutput);
                 output.add(jsonNode);
+                if (gameTable.getPlayerNumber(this) == 1) {
+                    Statistics.getInstance().addPlayerOneWin();
+                } else if (gameTable.getPlayerNumber(this) == 2) {
+                    Statistics.getInstance().addPlayerTwoWin();
+                }
+                Statistics.getInstance().addGame();
             }
             attackerCard.setUsedThisTurn(true);
         }
@@ -344,10 +349,11 @@ public class Player {
 
     public void placeCard(GameTable gameTable, Actions action, ArrayNode output) throws JsonProcessingException {
         boolean flag = true;
-        //if the card mana is more than player mana
         if (this.getCardsInHand().get(action.getHandIdx()) == null) {
-            System.out.println("CardsInHandError in function placeCard");
+            System.out.println("PLACE CARD error - card (from hand) is null");
         }
+
+        //if the card mana is more than player mana
         if(this.getCardsInHand().get(action.getHandIdx()).getMana() >
                 this.getMana()) {
             flag = false;
@@ -422,7 +428,7 @@ public class Player {
             JsonNode jsonNode = JsonParse.parseObjectToJson(errorStr);
             output.add(jsonNode);
         }
-        if (flag && card.getName().equals("Heart Hound") && !this.rowIsFree(action.getAffectedRow(), gameTable)) {
+        if (flag && card.getName().equals("Heart Hound") && !this.rowIsFreeForStealing(action.getAffectedRow(), gameTable)) {
                 flag = false;
             HeartHoundErrorMessage errorStr = new HeartHoundErrorMessage(action.getAffectedRow(),
                     "useEnvironmentCard", CANT_STEAL_ENEMY_CARD, action.getHandIdx());
@@ -507,7 +513,7 @@ public class Player {
         }
     }
 
-    private boolean rowIsFree(int enemyRow, GameTable gameTable) {
+    private boolean rowIsFreeForStealing(int enemyRow, GameTable gameTable) {
         if (enemyRow == PLAYER_ONE_BACK_ROW_INDEX && gameTable.getPlayerTwoBackRow().size() < 5) {
             return true;
         }
@@ -516,7 +522,8 @@ public class Player {
         }
         if (enemyRow == PLAYER_TWO_BACK_ROW_INDEX && gameTable.getPlayerOneBackRow().size() < 5) {
             return true;
-        } if (enemyRow == PLAYER_TWO_FRONT_ROW_INDEX && gameTable.getPlayerOneFrontRow().size() < 5) {
+        }
+        if (enemyRow == PLAYER_TWO_FRONT_ROW_INDEX && gameTable.getPlayerOneFrontRow().size() < 5) {
             return true;
         }
         return false;
@@ -525,7 +532,7 @@ public class Player {
     public void useEnvCard(Card card, Actions action, GameTable gameTable, ArrayNode output) throws JsonProcessingException {
         ArrayList<Card> row = gameTable.getRow(action.getAffectedRow());
         if (row == null) {
-            System.out.println("useEnvironmentCard - row number error");
+            System.out.println("useEnvCard - row number error");
         }
         if (card.getName().equals("Firestorm")) {
             for (int i = 0; i < row.size(); i++) {

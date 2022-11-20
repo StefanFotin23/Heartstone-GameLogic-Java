@@ -12,7 +12,8 @@ public abstract class Card {
     private boolean frozen = false;
     private boolean usedThisTurn = false;
 
-    protected Card(String name, String description, int health, int attackDamage, int mana, ArrayList<String> colors) {
+    protected Card(String name, String description,
+                   int health, int attackDamage, int mana, ArrayList<String> colors) {
         this.name = new String(name);
         this.description = description;
         this.health = health;
