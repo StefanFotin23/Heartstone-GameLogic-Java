@@ -42,7 +42,7 @@
     "colors" : [ "Black", "White", "Red" ],
     "name" : "The Cursed One",
     "attackDamage" : 0,
-    "health" : 3
+    "health" : 1
   }, {
     "mana" : 2,
     "description" : "Premium card: Fear him. Your last breath is now.",
@@ -63,7 +63,7 @@
     "colors" : [ "Black", "White", "Green" ],
     "name" : "Warden",
     "attackDamage" : 2,
-    "health" : 6
+    "health" : 1
   } ], [ ] ]
 }, {
   "command" : "getCardsInHand",

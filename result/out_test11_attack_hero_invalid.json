@@ -82,7 +82,7 @@
     "description" : "Standard card: Absolute order, a soldier must devote his life to his General.",
     "colors" : [ "Green", "Yellow" ],
     "name" : "General Kocioraw",
-    "health" : 30
+    "health" : 24
   }
 }, {
   "command" : "getPlayerHero",
@@ -94,6 +94,14 @@
     "name" : "Empress Thorina",
     "health" : 30
   }
+}, {
+  "command" : "useAttackHero",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 1
+  },
+  "cardAttacked" : null,
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "placeCard",
   "handIdx" : 0,

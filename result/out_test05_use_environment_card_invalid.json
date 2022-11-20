@@ -81,6 +81,11 @@
   "affectedRow" : 3,
   "error" : "Chosen row does not belong to the enemy."
 }, {
+  "affectedRow" : 2,
+  "command" : "useEnvironmentCard",
+  "error" : "Cannot steal enemy card since the player's row is full.",
+  "handIdx" : 0
+}, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
   "output" : 17

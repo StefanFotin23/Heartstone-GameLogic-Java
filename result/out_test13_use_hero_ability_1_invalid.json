@@ -1,4 +1,14 @@
 [ {
+  "command" : "useHeroAbility",
+  "handIdx" : 0,
+  "affectedRow" : 0,
+  "error" : "Not enough mana to use hero's ability."
+}, {
+  "command" : "useHeroAbility",
+  "handIdx" : 0,
+  "affectedRow" : 0,
+  "error" : "Not enough mana to use hero's ability."
+}, {
   "command" : "getCardAtPosition",
   "x" : 0,
   "y" : 0,
@@ -53,13 +63,46 @@
     "health" : 2
   }
 }, {
+  "command" : "useHeroAbility",
+  "affectedRow" : 0,
+  "error" : "Hero has already attacked this turn."
+}, {
+  "command" : "useHeroAbility",
+  "affectedRow" : 2,
+  "error" : "Hero has already attacked this turn."
+}, {
+  "command" : "useHeroAbility",
+  "handIdx" : 0,
+  "affectedRow" : 2,
+  "error" : "Not enough mana to use hero's ability."
+}, {
+  "command" : "useHeroAbility",
+  "affectedRow" : 0,
+  "error" : "Hero has already attacked this turn."
+}, {
+  "command" : "useHeroAbility",
+  "affectedRow" : 3,
+  "error" : "Hero has already attacked this turn."
+}, {
+  "command" : "useHeroAbility",
+  "affectedRow" : 0,
+  "error" : "Hero has already attacked this turn."
+}, {
+  "command" : "useHeroAbility",
+  "affectedRow" : 2,
+  "error" : "Hero has already attacked this turn."
+}, {
+  "command" : "useHeroAbility",
+  "affectedRow" : 1,
+  "error" : "Hero has already attacked this turn."
+}, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 22
+  "output" : 19
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 21
+  "output" : 19
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {

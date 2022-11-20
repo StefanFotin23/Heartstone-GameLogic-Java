@@ -23,6 +23,39 @@
     "health" : 4
   }
 }, {
+  "command" : "cardAbilityAttack",
+  "cardAttacker" : {
+    "x" : 2,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
+  "command" : "cardAbilityAttack",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 1,
+    "y" : 0
+  },
+  "error" : "Attacker card has already attacked this turn."
+}, {
+  "command" : "cardAbilityAttack",
+  "cardAttacker" : {
+    "x" : 2,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 2,
+    "y" : 1
+  },
+  "error" : "Attacker card has already attacked this turn."
+}, {
   "command" : "getCardsInHand",
   "playerIdx" : 2,
   "output" : [ {
@@ -40,6 +73,17 @@
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
+}, {
+  "command" : "cardAbilityAttack",
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 2,
+    "y" : 1
+  },
+  "error" : "Attacker card has already attacked this turn."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
@@ -91,7 +135,7 @@
     "colors" : [ "Red", "Purple" ],
     "name" : "Goliath",
     "attackDamage" : 1,
-    "health" : 8
+    "health" : 10
   }, {
     "mana" : 4,
     "description" : "Premium card: Insanity is always an option, now it is an absolute.",

@@ -4,6 +4,17 @@
   "affectedRow" : 0,
   "error" : "Chosen row does not belong to the enemy."
 }, {
+  "command" : "cardUsesAttack",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "error" : "Attacked card does not belong to the enemy."
+}, {
   "command" : "getCardAtPosition",
   "x" : 0,
   "y" : 3,
@@ -13,6 +24,17 @@
   "handIdx" : 0,
   "affectedRow" : 3,
   "error" : "Chosen row does not belong to the enemy."
+}, {
+  "command" : "cardUsesAttack",
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 3,
+    "y" : 0
+  },
+  "error" : "Attacked card does not belong to the enemy."
 }, {
   "command" : "getCardAtPosition",
   "x" : 3,
@@ -72,6 +94,28 @@
   "command" : "placeCard",
   "handIdx" : 0,
   "error" : "Cannot place environment card on table."
+}, {
+  "command" : "cardUsesAttack",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "error" : "Attacked card does not belong to the enemy."
+}, {
+  "command" : "cardUsesAttack",
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 0,
+    "y" : 1
+  },
+  "error" : "Attacked card does not belong to the enemy."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,

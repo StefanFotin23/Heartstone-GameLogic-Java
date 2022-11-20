@@ -50,6 +50,17 @@
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
+  "command" : "cardUsesAttack",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 2,
+    "y" : 0
+  },
+  "error" : "Attacked card does not belong to the enemy."
+}, {
   "command" : "getEnvironmentCardsInHand",
   "playerIdx" : 2,
   "output" : [ {
@@ -94,6 +105,17 @@
     "name" : "Heart Hound"
   } ]
 }, {
+  "command" : "cardUsesAttack",
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 2,
+    "y" : 0
+  },
+  "error" : "Attacked card does not belong to the enemy."
+}, {
   "command" : "getFrozenCardsOnTable",
   "frozenCards" : [ ]
 }, {
@@ -105,6 +127,17 @@
   "x" : 2,
   "y" : 0,
   "output" : "No card at that position."
+}, {
+  "command" : "cardUsesAttack",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 1
+  },
+  "cardAttacked" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "error" : "Attacked card does not belong to the enemy."
 }, {
   "command" : "getEnvironmentCardsInHand",
   "playerIdx" : 1,

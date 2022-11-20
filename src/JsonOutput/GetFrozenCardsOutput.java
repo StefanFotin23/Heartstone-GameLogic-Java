@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class GetFrozenCardsOutput {
     private final String command;
-    private final ArrayList<EnvironmentCardJsonOutput> frozenCards;
+    private final ArrayList<EnvironmentCardJsonOutput> output;
 
     public GetFrozenCardsOutput(String command, ArrayList<EnvironmentCardJsonOutput> frozenCards) {
         this.command = command;
-        this.frozenCards = frozenCards;
+        this.output = frozenCards;
     }
 
     public String getCommand() {
@@ -18,6 +18,6 @@ public class GetFrozenCardsOutput {
     }
 
     public ArrayList<EnvironmentCardJsonOutput> getFrozenCards() {
-        return frozenCards;
+        return output;
     }
 }

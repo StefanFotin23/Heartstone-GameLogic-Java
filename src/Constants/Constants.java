@@ -17,7 +17,7 @@ public class Constants {
     public static String ATTACKER_CARD_USED = "Attacker card has already attacked this turn.";
     public static String ATTACKED_CARD_NONEXISTENT = "Attacked card does not belong to the enemy.";
     public static String ATTACKED_CARD_NOT_ALLY = "Attacked card does not belong to the current player.";
-    public static String ATTACKED_CARD_NOT_TANK = "Attacked card is not of type 'Tank’.";
+    public static String ATTACKED_CARD_NOT_TANK = "Attacked card is not of type 'Tank'.";
     public static String NO_CARD_THERE = "No card at that position.";
     public static String PLAYER1 = "player1";
     public static String PLAYER2 = "player2";
@@ -26,4 +26,9 @@ public class Constants {
     public static String NOT_MANA_ENVIRONMENT_MESSAGE = "Not enough mana to use environment card.";
     public static String CHOSEN_ROW_NOT_ENEMY = "Chosen row does not belong to the enemy.";
     public static String CANT_STEAL_ENEMY_CARD = "Cannot steal enemy card since the player's row is full.";
+    public static String HERO_NO_MANA = "Not enough mana to use hero's ability.";
+    public static String HERO_CARD_USED = "Hero has already attacked this turn.";
+    public static String SELECTED_ROW_NOT_ENEMY = "Selected row does not belong to the enemy.";
+    public static String SELECTED_ROW_NOT_ALLY = "Selected row does not belong to the current player.";
+    public static String HEART_HOUND_NO_SPACE_ON_ROW = "Cannot steal enemy card since the player's row is full.";
 }

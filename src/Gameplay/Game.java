@@ -106,6 +106,7 @@ public class Game {
         //unfreezing the cards on table
         for (int i = 0; i< gameTable.getCardsOnTable().size(); i++) {
             gameTable.getCardsOnTable().get(i).setFrozen(false);
+            gameTable.getCardsOnTable().get(i).setUsedThisTurn(false);
         }
     }
 
