@@ -6,18 +6,18 @@ import java.util.ArrayList;
 
 public class GetFrozenCardsOutput {
     private final String command;
-    private final ArrayList<EnvironmentCardJsonOutput> output;
+    private final ArrayList<CardJsonOutput> output;
 
-    public GetFrozenCardsOutput(String command, ArrayList<EnvironmentCardJsonOutput> frozenCards) {
-        this.command = command;
-        this.output = frozenCards;
+    public GetFrozenCardsOutput(ArrayList<CardJsonOutput> output) {
+        this.command = "getFrozenCardsOnTable";
+        this.output = output;
     }
 
     public String getCommand() {
         return command;
     }
 
-    public ArrayList<EnvironmentCardJsonOutput> getFrozenCards() {
+    public ArrayList<CardJsonOutput> getOutput() {
         return output;
     }
 }

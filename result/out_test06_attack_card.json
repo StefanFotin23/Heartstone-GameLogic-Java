@@ -36,7 +36,21 @@
   "output" : 2
 }, {
   "command" : "getCardsOnTable",
-  "output" : [ [ {
+  "output" : [ [ ], [ {
+    "mana" : 2,
+    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
+    "colors" : [ "Black", "White", "Green" ],
+    "name" : "Warden",
+    "attackDamage" : 2,
+    "health" : 1
+  } ], [ {
+    "mana" : 2,
+    "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
+    "colors" : [ "Black", "White", "Green" ],
+    "name" : "Warden",
+    "attackDamage" : 3,
+    "health" : 6
+  } ], [ {
     "mana" : 2,
     "description" : "Premium card: Nobody suspects an outcast, not even the Gods.",
     "colors" : [ "Black", "White", "Red" ],
@@ -50,21 +64,7 @@
     "name" : "Berserker",
     "attackDamage" : 2,
     "health" : 1
-  } ], [ {
-    "mana" : 2,
-    "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
-    "colors" : [ "Black", "White", "Green" ],
-    "name" : "Warden",
-    "attackDamage" : 3,
-    "health" : 6
-  } ], [ {
-    "mana" : 2,
-    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
-    "colors" : [ "Black", "White", "Green" ],
-    "name" : "Warden",
-    "attackDamage" : 2,
-    "health" : 1
-  } ], [ ] ]
+  } ] ]
 }, {
   "command" : "getCardsInHand",
   "playerIdx" : 2,

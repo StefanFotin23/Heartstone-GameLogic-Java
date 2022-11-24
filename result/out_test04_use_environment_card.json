@@ -70,27 +70,6 @@
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
-    "mana" : 1,
-    "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
-    "colors" : [ "Black", "White" ],
-    "name" : "Sentinel",
-    "attackDamage" : 1,
-    "health" : 2
-  }, {
-    "mana" : 2,
-    "description" : "Standard card: A drink can always be served, with the blood of his enemies.",
-    "colors" : [ "Red", "Blue", "Pink" ],
-    "name" : "Berserker",
-    "attackDamage" : 2,
-    "health" : 0
-  }, {
-    "mana" : 1,
-    "description" : "Premium card: Fear him. Your last breath is now.",
-    "colors" : [ "Red", "Blue", "Pink" ],
-    "name" : "Berserker",
-    "attackDamage" : 2,
-    "health" : 0
-  } ], [ ], [ ], [ {
     "mana" : 2,
     "description" : "Standard card: A drink can always be served, with the blood of his enemies.",
     "colors" : [ "Red", "Blue", "Pink" ],
@@ -111,6 +90,13 @@
     "name" : "Sentinel",
     "attackDamage" : 1,
     "health" : 3
+  } ], [ ], [ ], [ {
+    "mana" : 1,
+    "description" : "Premium card: His presence is not known even by ghosts, success at all costs.",
+    "colors" : [ "Black", "White" ],
+    "name" : "Sentinel",
+    "attackDamage" : 1,
+    "health" : 2
   } ] ]
 }, {
   "command" : "getCardsInHand",

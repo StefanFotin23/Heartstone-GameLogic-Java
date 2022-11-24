@@ -17,24 +17,10 @@ public class GameSeries {
         this.games = games;
     }
 
-    public DecksCollection getPlayerOneDecks() {
-        return playerOneDecks;
-    }
-
-    public DecksCollection getPlayerTwoDecks() {
-        return playerTwoDecks;
-    }
-
-    public ArrayList<Game> getGames() {
-        return games;
-    }
-
     //main method for a gameSeries
-    public ArrayNode playSeries() throws JsonProcessingException {
-        ArrayNode output = null;
+    public void playSeries(ArrayNode output, String filePath1) throws JsonProcessingException {
         for (int i = 0; i < games.size(); i++) {
-            output = (games.get(i).startGame(playerOneDecks, playerTwoDecks));
+            games.get(i).startGame(playerOneDecks, playerTwoDecks, output, filePath1);
         }
-        return output;
     }
 }

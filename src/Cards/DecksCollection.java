@@ -7,9 +7,9 @@ import java.util.ArrayList;
 public class DecksCollection {
     private final int nrCardsInDeck;
     private final int nrDecks;
-    private final ArrayList<Deck> decks;
+    private final ArrayList<ArrayList<Card>> decks;
 
-    public DecksCollection(int nrCardsInDeck, int nrDecks, ArrayList<Deck> decks) {
+    public DecksCollection(int nrCardsInDeck, int nrDecks, ArrayList<ArrayList<Card>> decks) {
         this.nrCardsInDeck = nrCardsInDeck;
         this.nrDecks = nrDecks;
         this.decks = decks;
@@ -23,7 +23,7 @@ public class DecksCollection {
         return nrDecks;
     }
 
-    public ArrayList<Deck> getDecks() {
+    public ArrayList<ArrayList<Card>> getDecks() {
         return decks;
     }
 }

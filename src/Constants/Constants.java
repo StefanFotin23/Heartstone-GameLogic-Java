@@ -15,10 +15,10 @@ public class Constants {
     public static String FULL_ROW_MESSAGE = "Cannot place card on table since row is full.";
     public static String ATTACKER_CARD_FROZEN = "Attacker card is frozen.";
     public static String ATTACKER_CARD_USED = "Attacker card has already attacked this turn.";
-    public static String ATTACKED_CARD_NONEXISTENT = "Attacked card does not belong to the enemy.";
+    public static String ATTACKED_CARD_NOT_ENEMY = "Attacked card does not belong to the enemy.";
     public static String ATTACKED_CARD_NOT_ALLY = "Attacked card does not belong to the current player.";
     public static String ATTACKED_CARD_NOT_TANK = "Attacked card is not of type 'Tank'.";
-    public static String NO_CARD_THERE = "No card at that position.";
+    public static String NO_CARD_THERE = "No card available at that position.";
     public static String PLAYER1 = "player1";
     public static String PLAYER2 = "player2";
     public static int HERO_HEALTH_DEFAULT_VALUE = 30;
@@ -31,4 +31,19 @@ public class Constants {
     public static String SELECTED_ROW_NOT_ENEMY = "Selected row does not belong to the enemy.";
     public static String SELECTED_ROW_NOT_ALLY = "Selected row does not belong to the current player.";
     public static String HEART_HOUND_NO_SPACE_ON_ROW = "Cannot steal enemy card since the player's row is full.";
+    public static String THE_RIPPER = "The Ripper";
+    public static String MIRAJ = "Miraj";
+    public static String THE_CURSED_ONE = "The Cursed One";
+    public static String DISCIPLE = "Disciple";
+    public static String SENTINEL = "Sentinel";
+    public static String BERSERKER = "Berserker";
+    public static String GOLIATH = "Goliath";
+    public static String WARDEN = "Warden";
+    public static String FIRESTORM = "Firestorm";
+    public static String WINTERFELL = "Winterfell";
+    public static String HEART_HOUND = "Heart Hound";
+    public static String LORD_ROYCE = "Lord Royce";
+    public static String EMPRESS_THORINA = "Empress Thorina";
+    public static String KING_MUDFACE = "King Mudface";
+    public static String GENERAL_KOCIORAW = "General Kocioraw";
 }

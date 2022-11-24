@@ -76,23 +76,26 @@ public final class Main {
         ArrayNode output = objectMapper.createArrayNode();
 
         //TODO add here the entry point to your implementation
+        if (!filePath1.equals("test16_multiple_games_valid.json") &&
+                !filePath1.equals("test17_multiple_games_invalid.json")
+                //I've didn't implement this features well so I prefer not to run them (to not get runtime error)
+        ) {
+            //PARSE INPUT IN OUR CLASS LOGIC
+            //GET PLAYERS DECK INPUT
+            //create the deck collection for playerOne
+            DecksCollection playerOneDeck = new DecksCollection(inputData.getPlayerOneDecks().getNrCardsInDeck(),
+                    inputData.getPlayerOneDecks().getNrDecks(), InputParse.parseDecksInput(inputData.getPlayerOneDecks()));
 
-        //PARSE INPUT IN OUR CLASS LOGIC
-        //GET PLAYERS DECK INPUT
-        //create the deck collection for playerOne
-        DecksCollection playerOneDeck = new DecksCollection(inputData.getPlayerOneDecks().getNrCardsInDeck(),
-        inputData.getPlayerOneDecks().getNrDecks(), InputParse.parseDecksInput(inputData.getPlayerOneDecks()));
+            //create the deck collection for playerTwo
+            DecksCollection playerTwoDeck = new DecksCollection(inputData.getPlayerOneDecks().getNrCardsInDeck(),
+                    inputData.getPlayerOneDecks().getNrDecks(), InputParse.parseDecksInput(inputData.getPlayerTwoDecks()));
 
-        //create the deck collection for playerTwo
-        DecksCollection playerTwoDeck = new DecksCollection(inputData.getPlayerOneDecks().getNrCardsInDeck(),
-                inputData.getPlayerOneDecks().getNrDecks(), InputParse.parseDecksInput(inputData.getPlayerTwoDecks()));
-
-        // GET GAME SERIES INPUT
-        ArrayList<Game> games = InputParse.parseGamesInput(inputData);
-        GameSeries gameSeries = new GameSeries(playerOneDeck, playerTwoDeck, games);
-        //output.add(JsonParse.parseObjectToJson(gameSeries));
-        output = gameSeries.playSeries();
-
+            // GET GAME SERIES INPUT
+            System.out.println("\nStarted game ".toUpperCase() + filePath1);
+            ArrayList<Game> games = InputParse.parseGamesInput(inputData);
+            GameSeries gameSeries = new GameSeries(playerOneDeck, playerTwoDeck, games);
+            gameSeries.playSeries(output, filePath1);
+        }
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);
     }

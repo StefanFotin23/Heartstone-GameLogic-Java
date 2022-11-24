@@ -37,7 +37,7 @@
   "output" : [ ]
 }, {
   "command" : "getFrozenCardsOnTable",
-  "frozenCards" : [ ]
+  "output" : [ ]
 }, {
   "command" : "getPlayerTurn",
   "output" : 1
@@ -97,41 +97,6 @@
   "command" : "getCardsOnTable",
   "output" : [ [ ], [ {
     "mana" : 3,
-    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
-    "colors" : [ "Brown", "Black", "Grey" ],
-    "name" : "Goliath",
-    "attackDamage" : 1,
-    "health" : 7
-  }, {
-    "mana" : 4,
-    "description" : "Premium card: Insanity is always an option, now it is an absolute.",
-    "colors" : [ "Yellow", "Orange", "Red" ],
-    "name" : "Miraj",
-    "attackDamage" : 5,
-    "health" : 4
-  }, {
-    "mana" : 5,
-    "description" : "Premium card: Insanity is always an option, now it is an absolute.",
-    "colors" : [ "Red", "Black" ],
-    "name" : "Miraj",
-    "attackDamage" : 5,
-    "health" : 3
-  }, {
-    "mana" : 4,
-    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
-    "colors" : [ "Orange", "Red", "Black" ],
-    "name" : "The Ripper",
-    "attackDamage" : 5,
-    "health" : 4
-  }, {
-    "mana" : 5,
-    "description" : "Premium card: Insanity is always an option, now it is an absolute.",
-    "colors" : [ "Yellow", "Orange", "Red" ],
-    "name" : "Miraj",
-    "attackDamage" : 4,
-    "health" : 4
-  } ], [ {
-    "mana" : 3,
     "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
     "colors" : [ "Red", "Purple" ],
     "name" : "Goliath",
@@ -165,6 +130,41 @@
     "name" : "Warden",
     "attackDamage" : 3,
     "health" : 5
+  } ], [ {
+    "mana" : 3,
+    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
+    "colors" : [ "Brown", "Black", "Grey" ],
+    "name" : "Goliath",
+    "attackDamage" : 1,
+    "health" : 7
+  }, {
+    "mana" : 4,
+    "description" : "Premium card: Insanity is always an option, now it is an absolute.",
+    "colors" : [ "Yellow", "Orange", "Red" ],
+    "name" : "Miraj",
+    "attackDamage" : 5,
+    "health" : 4
+  }, {
+    "mana" : 5,
+    "description" : "Premium card: Insanity is always an option, now it is an absolute.",
+    "colors" : [ "Red", "Black" ],
+    "name" : "Miraj",
+    "attackDamage" : 5,
+    "health" : 3
+  }, {
+    "mana" : 4,
+    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
+    "colors" : [ "Orange", "Red", "Black" ],
+    "name" : "The Ripper",
+    "attackDamage" : 5,
+    "health" : 4
+  }, {
+    "mana" : 5,
+    "description" : "Premium card: Insanity is always an option, now it is an absolute.",
+    "colors" : [ "Yellow", "Orange", "Red" ],
+    "name" : "Miraj",
+    "attackDamage" : 4,
+    "health" : 4
   } ], [ ] ]
 }, {
   "command" : "getCardsInHand",
